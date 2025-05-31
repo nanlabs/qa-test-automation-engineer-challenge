@@ -1,0 +1,21 @@
+{
+  "name": "qa-test-automation-engineer-challenge",
+  "version": "1.0.0",
+  "description": "Welcome to the **QA / Test Automation Engineer Challenge!** 🔍🧼\r This challenge is designed to evaluate your ability to test modern web applications with a strong focus on **automation, coverage, and clarity**.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariano-castro/qa-test-automation-engineer-challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mariano-castro/qa-test-automation-engineer-challenge/issues"
+  },
+  "homepage": "https://github.com/mariano-castro/qa-test-automation-engineer-challenge#readme"
+}
