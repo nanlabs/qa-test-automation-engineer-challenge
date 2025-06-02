@@ -1,0 +1,21 @@
+{
+    "name": "cypress-e2e-framework",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+      "cypress:ui": "cypress run --spec cypress/e2e/ui/**/*",
+      "cypress:api": "cypress run --spec cypress/e2e/api/**/*",
+      "cypress:e2e": "cypress run --spec cypress/e2e/flows/**/*",
+      "cypress:chrome": "cypress run --browser chrome --spec cypress/e2e/**/**/*.cy.js"
+    },
+    "keywords": [
+      "e2e",
+      "automation",
+      "framework",
+      "cypress"
+    ],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+    }
+  }

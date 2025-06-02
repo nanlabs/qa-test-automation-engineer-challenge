@@ -1,0 +1,22 @@
+[
+    {   
+        "name": "APIPROD002 - Search dress and validate total products",
+        "product": "dress",
+        "count": 9
+    }, 
+    {   
+        "name": "APIPROD003 - Search top and validate total products",
+        "product": "top",
+        "count": 14
+    },
+    {
+        "name": "APIPROD004 - Search Tshirts and validate total products",
+        "product": "Tshirts",
+        "count": 6
+    },
+    {
+        "name": "APIPROD005 - Search jeans and validate total products",
+        "product": "jeans",
+        "count": 3
+    }
+]
