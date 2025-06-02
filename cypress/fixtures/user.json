@@ -1,0 +1,32 @@
+{
+    "user": {
+        "name": "Test User",
+        "email": "testinggregorio@gmail.com",
+        "password": "test123",
+        "title": "Mr",
+        "birth_date": "1990-01-01",
+        "firstname": "testiuser",
+        "lastname": "lastname4",
+        "address1": "123 Main St",
+        "country": "India",
+        "state": "Delhi",
+        "city": "Delhi",
+        "zipcode": "110001",
+        "mobile_number": "1234567890"
+    }, 
+    "update": {
+        "name": "User Test",
+        "email": "federrr2244we24@gmail.com",
+        "password": "test123",
+        "title": "Mr",
+        "birth_date": "1990-01-01",
+        "firstname": "fedeTest",
+        "lastname": "lastname4",
+        "address1": "123 Main St",
+        "country": "India",
+        "state": "Delhi",
+        "city": "Delhi",
+        "zipcode": "110001",
+        "mobile_number": "1234567890"
+    }
+}

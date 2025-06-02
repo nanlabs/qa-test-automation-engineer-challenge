@@ -1,0 +1,14 @@
+[
+  {
+    "name": "UI-001 - Login with valid credentials",
+    "email": "federicogrego30@gmail.com",
+    "password": "RcP4eeQKM@yBB",
+    "size": "iphone-6"
+  },
+  {
+    "name": "UI-002 - Login with wrong credentials",
+    "email": "fede@gmail.com",
+    "password": "RcP4eeQKM@yBB",
+    "size": "ipad-2"
+  }
+]
