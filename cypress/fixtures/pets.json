@@ -1,0 +1,17 @@
+{
+  "validPet": {
+    "id": 123456789,
+    "name": "Tester",
+    "status": "available"
+  },
+  "updatedPet": {
+    "id": 123456789,
+    "name": "TesterUpdated",
+    "status": "sold"
+  },
+  "invalidPet": {
+    "id": "not-a-number",
+    "name": "",
+    "status": "invalidStatus"
+  }
+}
