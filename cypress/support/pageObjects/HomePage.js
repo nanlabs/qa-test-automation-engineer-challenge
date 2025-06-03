@@ -23,6 +23,10 @@ class HomePage {
     clickTestCases() {
       cy.get('a[href="/test_cases"]').contains('Test Cases').click();
     }
+
+    clickProducts() {
+      cy.get('a[href="/products"]').contains('Products').click();
+    }
   }
   export default HomePage
   
