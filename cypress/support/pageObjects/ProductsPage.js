@@ -12,6 +12,24 @@ class ProductsPage {
       cy.get('.product-overlay').first().invoke('show');
       cy.contains('View Product').first().click();
     }
+
+    enterSearchTerm(term) {
+      cy.get('#search_product').type(term);
+    }
+
+    clickSearchButton() {
+      cy.get('#submit_search').click();
+    }
+
+    verifySearchedProductsTitleVisible() {
+      cy.contains('Searched Products').should('be.visible');
+    }
+
+    verifySearchedProductsVisible() {
+      cy.get('.features_items .product-image-wrapper').should('have.length.greaterThan', 0);
+    }
+
+
   }
   export default ProductsPage;
   
