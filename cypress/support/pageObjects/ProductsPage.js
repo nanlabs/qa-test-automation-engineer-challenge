@@ -38,6 +38,22 @@ class ProductsPage {
       cy.contains('Add to cart').first().click();
       cy.contains('Continue Shopping').click();
     }
+
+    addProductToCartByIndex(index) {
+      cy.get('.product-overlay').eq(index).invoke('show');
+      cy.get('.product-overlay')
+        .eq(index)
+        .contains('Add to cart')
+        .click();
+    }
+
+    clickContinueShopping() {
+      cy.contains('Continue Shopping').click();
+    }
+
+    clickViewCart() {
+      cy.contains('View Cart').click();
+    }
     
 
   }
