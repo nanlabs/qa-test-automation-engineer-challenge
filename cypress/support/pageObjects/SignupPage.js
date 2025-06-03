@@ -11,6 +11,10 @@ class SignupPage {
     clickSignupButton() {
       cy.get('button[data-qa="signup-button"]').click()
     }
+
+    verifyEmailAlreadyExistsError() {
+      cy.contains('Email Address already exist!').should('be.visible');
+    }
   
     verifyEnterAccountInfoVisible() {
       cy.contains('Enter Account Information').should('be.visible')

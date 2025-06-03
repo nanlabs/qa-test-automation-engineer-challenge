@@ -19,6 +19,10 @@ class HomePage {
     clickSignupLogin() {
       cy.contains('Signup / Login').click()
     }
+
+    clickTestCases() {
+      cy.get('a[href="/test_cases"]').contains('Test Cases').click();
+    }
   }
   export default HomePage
   
