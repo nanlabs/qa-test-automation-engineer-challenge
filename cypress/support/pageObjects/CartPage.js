@@ -42,6 +42,22 @@ class CartPage {
         cy.wrap($el).should('not.be.empty');
       });
     }
+
+    verifyCartPageVisible() {
+      cy.get('.breadcrumbs').should('contain.text', 'Shopping Cart');
+    }
+
+    removeFirstProduct() {
+      cy.get('.cart_quantity_delete').first().click();
+    }
+
+    verifyProductRemoved() {
+      cy.get('tbody > tr').should('have.length.lessThan', 2); // assuming we have 1 product
+    }
+
+
+
+
     
   }
   
