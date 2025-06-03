@@ -1,0 +1,23 @@
+{
+  "name": "qa-test-automation-engineer-challenge",
+  "version": "1.0.0",
+  "description": "test automation",
+  "homepage": "https://github.com/Fermoal/qa-test-automation-engineer-challenge#readme",
+  "bugs": {
+    "url": "https://github.com/Fermoal/qa-test-automation-engineer-challenge/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fermoal/qa-test-automation-engineer-challenge.git"
+  },
+  "license": "ISC",
+  "author": "Fernando Alvarado",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "cypress": "^14.4.0"
+  }
+}

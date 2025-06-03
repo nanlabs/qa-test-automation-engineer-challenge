@@ -1,0 +1,24 @@
+{
+    "name": "JohnDoe",
+    "email": "john.doe+test@example.com",
+    "password": "Secure123!",
+    "title": "Mr",
+    "dob": {
+      "day": "10",
+      "month": "May",
+      "year": "1990"
+    },
+    "newsletter": true,
+    "offers": true,
+    "firstName": "John",
+    "lastName": "Doe",
+    "company": "Doe Inc.",
+    "address": "123 Main St",
+    "address2": "Apt 4B",
+    "country": "Canada",
+    "state": "Ontario",
+    "city": "Toronto",
+    "zipcode": "M4B1B3",
+    "mobile": "1234567890"
+  }
+  
