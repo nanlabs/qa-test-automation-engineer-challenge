@@ -29,6 +29,16 @@ class ProductsPage {
       cy.get('.features_items .product-image-wrapper').should('have.length.greaterThan', 0);
     }
 
+    visit() {
+      cy.visit('https://automationexercise.com/products');
+    }
+
+    addFirstProductToCart() {
+      cy.get('.product-overlay').first().invoke('show');
+      cy.contains('Add to cart').first().click();
+      cy.contains('Continue Shopping').click();
+    }
+    
 
   }
   export default ProductsPage;
