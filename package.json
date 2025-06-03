@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/mariano-castro/qa-test-automation-engineer-challenge/issues"
   },
-  "homepage": "https://github.com/mariano-castro/qa-test-automation-engineer-challenge#readme"
+  "homepage": "https://github.com/mariano-castro/qa-test-automation-engineer-challenge#readme",
+  "devDependencies": {
+    "cypress": "^14.4.0"
+  }
 }
