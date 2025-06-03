@@ -27,6 +27,26 @@ class HomePage {
     clickProducts() {
       cy.get('a[href="/products"]').contains('Products').click();
     }
+
+    scrollToFooter() {
+      cy.scrollTo('bottom');
+    }
+
+    verifySubscriptionTextVisible() {
+      cy.contains('Subscription').should('be.visible');
+    }
+
+    clickSubscribeArrow() {
+      cy.get('#subscribe').click();
+    }
+
+    verifySubscriptionSuccessMessage() {
+      cy.contains('You have been successfully subscribed!').should('be.visible');
+    }
+
+    enterEmailInSubscription(email) {
+      cy.get('#susbscribe_email').type(email);
+    }
   }
   export default HomePage
   
