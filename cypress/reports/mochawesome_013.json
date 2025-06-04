@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-06-04T00:42:26.192Z",
+    "end": "2025-06-04T00:42:39.967Z",
+    "duration": 13775,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "6f4cacd8-f0cb-4dba-bb0e-571dc97dd675",
+      "title": "",
+      "fullFile": "cypress/e2e/signUp_delete_spec.cy.js",
+      "file": "cypress/e2e/signUp_delete_spec.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "0f2e6dab-cd14-40a0-a3cb-f6218720d9ba",
+          "title": "Test case 1: Signup and Delete Account Flow",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Should sign up a new user and delete the account",
+              "fullTitle": "Test case 1: Signup and Delete Account Flow Should sign up a new user and delete the account",
+              "timedOut": null,
+              "duration": 12154,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "homePage.verifyHomePageVisible();\nhomePage.clickSignupLogin();\nsignupPage.verifyNewUserSignupVisible();\nsignupPage.enterNameEmail(this.userInf.name, this.userInf.email);\nsignupPage.clickSignupButton();\ncy.get('body').then($body => {\n  if ($body.text().includes('Email Address already exist!')) {\n    cy.log('Email exists. Proceeding to login and then delete...');\n    loginPage.enterLoginEmail(this.userInf.email);\n    loginPage.enterLoginPassword(this.userInf.password);\n    loginPage.clickLoginButton();\n    accountPage.clickDeleteAccount();\n    accountPage.verifyAccountDeleted();\n  } else {\n    // Email did not exist, so registration happened\n    signupPage.verifyEnterAccountInfoVisible();\n    signupPage.fillAccountInfo(this.userInf);\n    signupPage.submitAccountCreation();\n    accountPage.verifyAccountCreated();\n    accountPage.clickContinueButton();\n  }\n  //  resusable code\n  /*\n    signupPage.verifyEnterAccountInfoVisible()\n    signupPage.fillAccountInfo(this.userInf)\n    signupPage.submitAccountCreation()\n     accountPage.verifyAccountCreated()\n    accountPage.clickContinueButton()\n    accountPage.verifyLoggedIn(this.userInf.name)\n    accountPage.deleteAccount()\n    accountPage.verifyAccountDeleted()\n    */\n});",
+              "err": {},
+              "uuid": "41a5299b-ee71-4af7-ac34-33c1dc786081",
+              "parentUUID": "0f2e6dab-cd14-40a0-a3cb-f6218720d9ba",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "41a5299b-ee71-4af7-ac34-33c1dc786081"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 12154,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

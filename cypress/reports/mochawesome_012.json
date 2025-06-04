@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-06-04T00:42:18.731Z",
+    "end": "2025-06-04T00:42:24.573Z",
+    "duration": 5842,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "82d650ba-3f61-4983-bc59-ece06ed084aa",
+      "title": "",
+      "fullFile": "cypress/e2e/VerifyTestPage_spec.cy.js",
+      "file": "cypress/e2e/VerifyTestPage_spec.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "a2b0568f-fa0e-4a36-a6be-5ae1adc06868",
+          "title": "Test Case 7: Verify Test Cases Page",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should navigate to the test cases page successfully",
+              "fullTitle": "Test Case 7: Verify Test Cases Page should navigate to the test cases page successfully",
+              "timedOut": null,
+              "duration": 4078,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Visit home page and verify it's visible\nhomePage.visit();\nhomePage.verifyHomePageVisible();\n// Click on 'Test Cases'\nhomePage.clickTestCases();\n// Verify navigation to test cases page\ncy.url().should('include', '/test_cases');\ncy.contains('Test Cases').should('be.visible');",
+              "err": {},
+              "uuid": "31da0939-7df7-4bad-8782-e222f92cd2ea",
+              "parentUUID": "a2b0568f-fa0e-4a36-a6be-5ae1adc06868",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "31da0939-7df7-4bad-8782-e222f92cd2ea"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 4078,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

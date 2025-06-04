@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-06-04T00:40:56.424Z",
+    "end": "2025-06-04T00:41:03.399Z",
+    "duration": 6975,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "805c4e83-2176-4f49-84a5-eccdad570b17",
+      "title": "",
+      "fullFile": "cypress/e2e/ExistingUserValidation_spec.cy.js",
+      "file": "cypress/e2e/ExistingUserValidation_spec.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "e98d5f63-2eaf-4f05-85ec-355ff3195115",
+          "title": "Test Case 5: Register User with existing email",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should show error when registering with existing email",
+              "fullTitle": "Test Case 5: Register User with existing email should show error when registering with existing email",
+              "timedOut": null,
+              "duration": 5116,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// visiting home page\nhomePage.visit();\nhomePage.verifyHomePageVisible();\n// Click on Signup/Login\nhomePage.getSignupLoginButton().click();\n// Verify New User Signup is visible\nsignupPage.verifyNewUserSignupVisible();\n// Enter name and existing email\nsignupPage.enterNameEmail(this.inf.name, this.inf.email);\nloginPage.enterLoginPassword(this.inf.password);\n// Click Signup\nsignupPage.clickSignupButton();\n// Verify error message\nsignupPage.verifyEmailAlreadyExistsError();",
+              "err": {},
+              "uuid": "9d61076f-a533-4e8e-9958-87a7ae4a3f6a",
+              "parentUUID": "e98d5f63-2eaf-4f05-85ec-355ff3195115",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "9d61076f-a533-4e8e-9958-87a7ae4a3f6a"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 5116,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
