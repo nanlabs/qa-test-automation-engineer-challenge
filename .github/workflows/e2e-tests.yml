@@ -33,7 +33,10 @@ jobs:
           npx marge mochawesome.json --reportDir=cypress/reports/html
 
       - name: Upload Test Report Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mochawesome-report
           path: cypress/reports/html
+
+
+        
