@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-06-04T00:42:09.169Z",
+    "end": "2025-06-04T00:42:16.715Z",
+    "duration": 7546,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "a24dcb6c-b2ee-442e-a9a4-2b34f40e0a28",
+      "title": "",
+      "fullFile": "cypress/e2e/VerifyProducts_spec.cy.js",
+      "file": "cypress/e2e/VerifyProducts_spec.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "18a2dc1e-b6fc-4969-b774-1fce19914e85",
+          "title": "Test Case 8: Verify All Products and Product Detail Page",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should navigate to All Products and verify product details",
+              "fullTitle": "Test Case 8: Verify All Products and Product Detail Page should navigate to All Products and verify product details",
+              "timedOut": null,
+              "duration": 5731,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Launch & verify homepage\nhomePage.visit();\nhomePage.verifyHomePageVisible();\n// Click 'Products'\nhomePage.clickProducts();\n// Verify product list\nproductsPage.verifyProductsPageVisible();\nproductsPage.verifyProductsListVisible();\n// Click 'View Product' of first product\nproductsPage.clickFirstViewProduct();\n// Verify product detail page\ncy.url().should('include', '/product_details/');\nproductDetails.verifyProductDetails();",
+              "err": {},
+              "uuid": "c07a9cce-86f3-4594-bc1c-147585649a8f",
+              "parentUUID": "18a2dc1e-b6fc-4969-b774-1fce19914e85",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "c07a9cce-86f3-4594-bc1c-147585649a8f"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 5731,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

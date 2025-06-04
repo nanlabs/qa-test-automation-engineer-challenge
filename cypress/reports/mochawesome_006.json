@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-06-04T00:41:13.283Z",
+    "end": "2025-06-04T00:41:20.313Z",
+    "duration": 7030,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "e5df24f7-6e51-40cd-9035-6b2e54139e7b",
+      "title": "",
+      "fullFile": "cypress/e2e/InvalidLogin_spec.cy.js",
+      "file": "cypress/e2e/InvalidLogin_spec.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "df71f73c-66f9-4943-875c-c95851a2ae7e",
+          "title": "Test Case 3: Login User with incorrect email and password",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should display error for invalid login",
+              "fullTitle": "Test Case 3: Login User with incorrect email and password should display error for invalid login",
+              "timedOut": null,
+              "duration": 5258,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Launch and verify\nhomePage.visit();\nhomePage.verifyHomePageVisible();\n// Click login\nhomePage.getSignupLoginButton().click();\n// Verify login form visible\ncy.contains('Login to your account').should('be.visible');\n// Enter incorrect creds and submit\nloginPage.enterLoginEmail(this.invalid.invalidEmail);\nloginPage.enterLoginPassword(this.invalid.invalidPassword);\nloginPage.clickLoginButton();\n// Verify error message\nloginPage.verifyLoginErrorVisible();",
+              "err": {},
+              "uuid": "34926ae0-582a-4b0a-a43c-ceeaa8bff182",
+              "parentUUID": "df71f73c-66f9-4943-875c-c95851a2ae7e",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "34926ae0-582a-4b0a-a43c-ceeaa8bff182"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 5258,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

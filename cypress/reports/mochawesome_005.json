@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-06-04T00:41:05.173Z",
+    "end": "2025-06-04T00:41:11.610Z",
+    "duration": 6437,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "8796b719-8aaf-4b45-9a17-d801f99e051e",
+      "title": "",
+      "fullFile": "cypress/e2e/HomeSuscription_spec.cy.js",
+      "file": "cypress/e2e/HomeSuscription_spec.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "0db1dcdd-06b6-49ca-9094-42fb95b1e0b2",
+          "title": "Test Case 10: Verify Subscription in Home Page",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should allow user to subscribe from the footer",
+              "fullTitle": "Test Case 10: Verify Subscription in Home Page should allow user to subscribe from the footer",
+              "timedOut": null,
+              "duration": 4681,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Visit and verify homepage\nhomePage.visit();\nhomePage.verifyHomePageVisible();\n// Scroll to footer\nhomePage.scrollToFooter();\n// Verify 'SUBSCRIPTION' text\nhomePage.verifySubscriptionTextVisible();\n// Enter email and click arrow\nconst email = `test${Date.now()}@example.com`;\nhomePage.enterEmailInSubscription(email);\nhomePage.clickSubscribeArrow();\n// Verify success message\nhomePage.verifySubscriptionSuccessMessage();",
+              "err": {},
+              "uuid": "5d663a98-b457-4ae0-81af-114438ed2791",
+              "parentUUID": "0db1dcdd-06b6-49ca-9094-42fb95b1e0b2",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "5d663a98-b457-4ae0-81af-114438ed2791"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 4681,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

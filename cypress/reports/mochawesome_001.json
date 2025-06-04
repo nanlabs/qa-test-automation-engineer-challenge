@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-06-04T00:40:22.315Z",
+    "end": "2025-06-04T00:40:33.283Z",
+    "duration": 10968,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "d9aa10cd-30f0-4f42-9da2-13cfafc53209",
+      "title": "",
+      "fullFile": "cypress/e2e/AddReviewToProducts_spec.cy.js",
+      "file": "cypress/e2e/AddReviewToProducts_spec.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "bff9887c-64fb-4e3d-8dcd-886a81919dde",
+          "title": "Test Case 14: Add Review on a Product",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should allow user to add a review on a product",
+              "fullTitle": "Test Case 14: Add Review on a Product should allow user to add a review on a product",
+              "timedOut": null,
+              "duration": 9319,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Visit homepage and navigate to products\nhomePage.visit();\n// Go to products page\nproductsPage.visit();\nproductsPage.verifyProductsPageVisible();\n// Click 'View Product'\nproductsPage.clickFirstViewProduct();\n// Verify 'Write Your Review'\nproductDetails.verifyReviewSectionVisible();\n// Submit review\nproductDetails.submitReview(this.review.name, this.review.email, this.review.review);\n// Verify success message\nproductDetails.verifyReviewSuccessMessage();",
+              "err": {},
+              "uuid": "6f2be283-16d3-4fe5-b468-bdd5197853ae",
+              "parentUUID": "bff9887c-64fb-4e3d-8dcd-886a81919dde",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "6f2be283-16d3-4fe5-b468-bdd5197853ae"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 9319,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
