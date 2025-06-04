@@ -51,3 +51,23 @@ With more time I believe this framework could be enhanced by:
 
 ✅ Parallel execution for faster feedback
 
+## 🔍 Exploratory Notes / Suggestions
+Rapid navigation between views (race conditions?)
+
+Double-click buttons (e.g., Add to Cart, Subscribe)
+
+Offline/slow network mode via DevTools
+
+Language/localization support if available
+
+Accessibility (a11y): keyboard nav, ARIA labels
+
+Security:
+
+Test XSS injection in search/review forms
+
+Broken session on logout
+
+Performance:
+
+Load test products page with network
