@@ -9,6 +9,22 @@ class ProductDetailPage {
         cy.contains('Brand').should('be.visible');              // marca
       });
     }
+
+    verifyReviewSectionVisible() {
+      cy.contains('Write Your Review').should('be.visible');
+    }
+
+    verifyReviewSuccessMessage() {
+      cy.contains('Thank you for your review.').should('be.visible');
+    }
+
+    submitReview(name, email, review) {
+      cy.get('#name').type(name);
+      cy.get('#email').type(email);
+      cy.get('#review').type(review);
+      cy.get('#button-review').click();
+    }
+
   }
   export default ProductDetailPage;
   
