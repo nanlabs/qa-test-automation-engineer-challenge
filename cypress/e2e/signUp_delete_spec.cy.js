@@ -39,7 +39,7 @@ describe('Test case 1: Signup and Delete Account Flow', () => {
         else {
             // Email did not exist, so registration happened
         signupPage.verifyEnterAccountInfoVisible();
-        signupPage.fillAccountInfo(this.userInf); // Your reusable fill form function
+        signupPage.fillAccountInfo(this.userInf); 
         signupPage.submitAccountCreation();
         accountPage.verifyAccountCreated();
         accountPage.clickContinueButton();

@@ -20,7 +20,7 @@ describe('Test Case 2: Login User with correct email and password', () => {
 
     cy.contains('New User Signup!').should('be.visible');
 
-    // Step 1: Try to create user to check existence
+    // Try to create user to check existence
     cy.get('[data-qa="signup-name"]').type(this.userInf.name);
     cy.get('[data-qa="signup-email"]').type(this.userInf.email);
     cy.get('[data-qa="signup-button"]').click();

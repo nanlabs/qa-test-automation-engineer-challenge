@@ -12,7 +12,7 @@ describe('Test Case 11: Subscription from Cart Page', () => {
     homePage.visit();
     homePage.verifyHomePageVisible();
 
-    //since cart page won't work without an item we need to add one first to view page
+    //since i found cart page won't work without an item we need to add one first to view page
           // add product
           cy.log('Cart is empty, adding a product first');
           productPage.visit();

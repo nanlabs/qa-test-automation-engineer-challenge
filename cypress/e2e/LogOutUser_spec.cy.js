@@ -10,22 +10,22 @@ describe('Test Case 4: Log out user', () => {
   });
 
   it('should log in and log out the user successfully', function () {
-    // Step 1-3
+    // visiting home page
     homePage.visit();
     homePage.verifyHomePageVisible();
 
-    // Step 4: Go to Login
+    // Go to Login
     homePage.getSignupLoginButton().click();
 
-    // Step 6-7: Enter correct email and password
+    // Enter correct email and password
     loginPage.enterLoginEmail(this.inf.email);
     loginPage.enterLoginPassword(this.inf.password);
     loginPage.clickLoginButton();
 
-    // Step 8: Click logout
+    // Click logout
     loginPage.clickLogout();
 
-    // Step 9: Verify redirected to login
+    // Verify redirected to login
     loginPage.verifyRedirectedToLogin();
   });
 });
