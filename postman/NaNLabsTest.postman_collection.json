@@ -1,0 +1,219 @@
+{
+	"info": {
+		"_postman_id": "fdd01a80-9a8c-4e96-aa44-eacbb8298cac",
+		"name": "NaNLabsTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4170644"
+	},
+	"item": [
+		{
+			"name": "ProdutList",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const json = pm.response.json();",
+							"const products = json.products;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.eql(200);",
+							"});",
+							"",
+							"pm.test(\"Products array exists and is not empty\", function () {",
+							"    pm.expect(products).to.be.an(\"array\").that.is.not.empty;",
+							"});",
+							"",
+							"pm.test(\"All product IDs are unique\", function () {",
+							"    const ids = new Set();",
+							"    products.forEach(p => {",
+							"        pm.expect(ids.has(p.id)).to.eql(false, `Duplicated ID found: ${p.id}`);",
+							"        ids.add(p.id);",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"Each product has valid fields, types, price format and usertype\", function () {",
+							"    const validUsertypes = [\"Men\", \"Women\", \"Kids\"];",
+							"",
+							"    products.forEach(product => {",
+							"        pm.expect(product).to.have.property(\"id\");",
+							"        pm.expect(product).to.have.property(\"name\");",
+							"        pm.expect(product).to.have.property(\"price\");",
+							"        pm.expect(product).to.have.property(\"brand\");",
+							"        pm.expect(product).to.have.property(\"category\");",
+							"        pm.expect(product.category).to.have.property(\"usertype\");",
+							"        pm.expect(product.category.usertype).to.have.property(\"usertype\");",
+							"        pm.expect(product.category).to.have.property(\"category\");",
+							"",
+							"        pm.expect(product.id).to.be.a(\"number\");",
+							"        pm.expect(product.name).to.be.a(\"string\");",
+							"        pm.expect(product.price).to.match(/^Rs\\. \\d+$/);",
+							"        pm.expect(product.brand).to.be.a(\"string\");",
+							"",
+							"        const usertype = product.category.usertype.usertype;",
+							"        pm.expect(validUsertypes).to.include(usertype);",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}api/productsList",
+					"host": [
+						"{{url}}api"
+					],
+					"path": [
+						"productsList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchProduct",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const json = pm.response.json();\r",
+							"const products = json.products;\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Products array exists and is not empty\", function () {\r",
+							"    pm.expect(products).to.be.an(\"array\").that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"All product IDs are unique\", function () {\r",
+							"    const ids = new Set();\r",
+							"    products.forEach(p => {\r",
+							"        pm.expect(ids.has(p.id)).to.eql(false, `Duplicated ID found: ${p.id}`);\r",
+							"        ids.add(p.id);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each product has valid fields, types, price format and usertype\", function () {\r",
+							"    const validUsertypes = [\"Men\", \"Women\", \"Kids\"];\r",
+							"\r",
+							"    products.forEach(product => {\r",
+							"        pm.expect(product).to.have.property(\"id\");\r",
+							"        pm.expect(product).to.have.property(\"name\");\r",
+							"        pm.expect(product).to.have.property(\"price\");\r",
+							"        pm.expect(product).to.have.property(\"brand\");\r",
+							"        pm.expect(product).to.have.property(\"category\");\r",
+							"        pm.expect(product.category).to.have.property(\"usertype\");\r",
+							"        pm.expect(product.category.usertype).to.have.property(\"usertype\");\r",
+							"        pm.expect(product.category).to.have.property(\"category\");\r",
+							"\r",
+							"        pm.expect(product.id).to.be.a(\"number\");\r",
+							"        pm.expect(product.name).to.be.a(\"string\");\r",
+							"        pm.expect(product.price).to.match(/^Rs\\. \\d+$/);\r",
+							"        pm.expect(product.brand).to.be.a(\"string\");\r",
+							"\r",
+							"        const usertype = product.category.usertype.usertype;\r",
+							"        pm.expect(validUsertypes).to.include(usertype);\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "search_product",
+							"value": "Summer White Top",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}api/searchProduct",
+					"host": [
+						"{{url}}api"
+					],
+					"path": [
+						"searchProduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verifyLogin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const json = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.eql(200);",
+							"});",
+							"",
+							"pm.test(\"Response contains 'responseCode' and 'message'\", function () {",
+							"    pm.expect(json).to.have.property(\"responseCode\");",
+							"    pm.expect(json).to.have.property(\"message\");",
+							"});",
+							"",
+							"pm.test(\"Validate values of 'responseCode' and 'message'\", function () {",
+							"    pm.expect(json.responseCode).to.eql(200);",
+							"    pm.expect(json.message).to.be.a(\"string\").and.to.eql(\"User exists!\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "{{username}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}api/verifyLogin",
+					"host": [
+						"{{url}}api"
+					],
+					"path": [
+						"verifyLogin"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
