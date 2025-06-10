@@ -1,0 +1,20 @@
+{
+  "name": "automationexercise-challenge",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cypress:run": "cypress run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@cypress/code-coverage": "^3.14.4",
+    "babel-plugin-istanbul": "^7.0.0",
+    "cypress": "^14.4.0",
+    "istanbul-lib-coverage": "^3.2.2",
+    "nyc": "^17.1.0"
+  }
+}
