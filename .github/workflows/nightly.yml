@@ -1,0 +1,308 @@
+name: 🌙 Nightly Tests
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Every day at 2 AM UTC
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '20.x'
+  CYPRESS_VIDEO_ENABLED: 'true'
+
+jobs:
+  full-demoqa-regression:
+    name: 🎯 DemoQA Full Regression
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, firefox, edge]
+        viewport: [desktop, tablet, mobile]
+        
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: npm ci
+        
+      - name: 🎯 Run DemoQA tests - ${{ matrix.browser }} ${{ matrix.viewport }}
+        run: |
+          if [ "${{ matrix.viewport }}" = "mobile" ]; then
+            npm run test:demoqa:${{ matrix.browser }} -- --config viewportWidth=375,viewportHeight=667
+          elif [ "${{ matrix.viewport }}" = "tablet" ]; then
+            npm run test:demoqa:${{ matrix.browser }} -- --config viewportWidth=768,viewportHeight=1024
+          else
+            npm run test:demoqa:${{ matrix.browser }}
+          fi
+        env:
+          CI: true
+          CYPRESS_VIDEO_ENABLED: 'true'
+          
+      - name: 📊 Upload DemoQA nightly results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nightly-demoqa-${{ matrix.browser }}-${{ matrix.viewport }}
+          path: |
+            tests/screenshots/
+            tests/videos/
+            tests/reports/
+          retention-days: 30
+
+  full-automationexercise-regression:
+    name: 🏪 AutomationExercise Full Regression
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, firefox, edge]
+        viewport: [desktop, tablet, mobile]
+        
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: npm ci
+        
+      - name: 🏪 Run AutomationExercise tests - ${{ matrix.browser }} ${{ matrix.viewport }}
+        run: |
+          if [ "${{ matrix.viewport }}" = "mobile" ]; then
+            npm run test:automationexercise:${{ matrix.browser }} -- --config viewportWidth=375,viewportHeight=667
+          elif [ "${{ matrix.viewport }}" = "tablet" ]; then
+            npm run test:automationexercise:${{ matrix.browser }} -- --config viewportWidth=768,viewportHeight=1024
+          else
+            npm run test:automationexercise:${{ matrix.browser }}
+          fi
+        env:
+          CI: true
+          CYPRESS_VIDEO_ENABLED: 'true'
+          
+      - name: 📊 Upload AutomationExercise nightly results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nightly-automationexercise-${{ matrix.browser }}-${{ matrix.viewport }}
+          path: |
+            tests/screenshots/
+            tests/videos/
+            tests/reports/
+          retention-days: 30
+
+  api-full-regression:
+    name: 🔌 API Full Regression
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: npm ci
+        
+      - name: 🧪 Run comprehensive API tests
+        run: |
+          npm run test:api
+          npm run test:newman
+        env:
+          CI: true
+          
+      - name: 📊 Upload API regression results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nightly-api-regression
+          path: |
+            tests/screenshots/
+            tests/videos/
+            tests/reports/
+            newman-results.json
+          retention-days: 30
+
+  performance-tests:
+    name: ⚡ Performance Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: npm ci
+        
+      - name: ⚡ Run performance tests
+        run: npm run test:performance
+        env:
+          CI: true
+          
+      - name: 📊 Upload performance report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nightly-performance-report
+          path: tests/reports/
+          retention-days: 30
+
+  accessibility-comprehensive:
+    name: ♿ Comprehensive Accessibility
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [chrome, firefox]
+        
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: npm ci
+        
+      - name: ♿ Run comprehensive accessibility tests
+        run: npm run test:a11y -- --browser ${{ matrix.browser }}
+        env:
+          CI: true
+          
+      - name: 📊 Upload A11y comprehensive results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nightly-a11y-${{ matrix.browser }}
+          path: tests/reports/
+          retention-days: 30
+
+  cross-browser-matrix:
+    name: 🎯 Cross-Browser Matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        site: [demoqa, automationexercise]
+        browser: [chrome, firefox, edge]
+        include:
+          - site: demoqa
+            script: test:demoqa
+          - site: automationexercise  
+            script: test:automationexercise
+            
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: npm ci
+        
+      - name: 🎯 Run ${{ matrix.site }} tests on ${{ matrix.browser }}
+        run: npm run ${{ matrix.script }}:${{ matrix.browser }}
+        env:
+          CI: true
+          CYPRESS_VIDEO_ENABLED: 'true'
+          
+      - name: 📊 Upload cross-browser results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cross-browser-${{ matrix.site }}-${{ matrix.browser }}
+          path: |
+            tests/screenshots/
+            tests/videos/
+            tests/reports/
+          retention-days: 30
+
+  nightly-summary:
+    name: 📊 Nightly Summary
+    runs-on: ubuntu-latest
+    needs: [
+      full-demoqa-regression,
+      full-automationexercise-regression, 
+      api-full-regression,
+      performance-tests,
+      accessibility-comprehensive,
+      cross-browser-matrix
+    ]
+    if: always()
+    steps:
+      - name: 📥 Download all nightly artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: nightly-results/
+          
+      - name: 📊 Generate comprehensive nightly report
+        run: |
+          echo "# 🌙 Nightly Test Results - $(date +'%Y-%m-%d')" >> nightly-report.md
+          echo "" >> nightly-report.md
+          echo "## 📊 Test Execution Summary:" >> nightly-report.md
+          echo "- **DemoQA Regression**: ${{ needs.full-demoqa-regression.result }}" >> nightly-report.md
+          echo "- **AutomationExercise Regression**: ${{ needs.full-automationexercise-regression.result }}" >> nightly-report.md
+          echo "- **API Regression**: ${{ needs.api-full-regression.result }}" >> nightly-report.md
+          echo "- **Performance Tests**: ${{ needs.performance-tests.result }}" >> nightly-report.md
+          echo "- **Accessibility Tests**: ${{ needs.accessibility-comprehensive.result }}" >> nightly-report.md
+          echo "- **Cross-Browser Matrix**: ${{ needs.cross-browser-matrix.result }}" >> nightly-report.md
+          echo "" >> nightly-report.md
+          echo "## 📈 Artifacts Generated:" >> nightly-report.md
+          echo "Total artifact folders: $(find nightly-results -type d -name 'nightly-*' | wc -l)" >> nightly-report.md
+          echo "" >> nightly-report.md
+          echo "## 🔗 Links:" >> nightly-report.md
+          echo "- [GitHub Actions Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> nightly-report.md
+          
+      - name: 📤 Upload nightly summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-summary-report
+          path: nightly-report.md
+          retention-days: 90
+
+  notify-nightly:
+    name: 📢 Nightly Notifications
+    runs-on: ubuntu-latest
+    needs: [nightly-summary]
+    if: always()
+    steps:
+      - name: 📧 Slack nightly notification
+        uses: 8398a7/action-slack@v3
+        if: always()
+        with:
+          status: ${{ job.status }}
+          channel: '#qa-nightly-reports'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+          text: |
+            🌙 Nightly test execution completed
+            📊 Summary: ${{ needs.nightly-summary.result }}
+            🔗 Details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} 

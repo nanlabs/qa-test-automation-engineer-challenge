@@ -1,0 +1,67 @@
+{
+  "reporterEnabled": "cypress-multi-reporters",
+  "reporterOptions": {
+    "configFile": "tests/config/reporter.config.json"
+  },
+  "reporterEnabled": "mochawesome",
+  "mochawesomeReporterOptions": {
+    "reportDir": "tests/reports/mochawesome",
+    "quite": true,
+    "overwrite": false,
+    "html": true,
+    "json": true,
+    "timestamp": "mmddyyyy_HHMMss",
+    "reportFilename": "test-results",
+    "reportPageTitle": "QA Test Automation Report",
+    "reportTitle": "Test Results",
+    "embeddedScreenshots": true,
+    "inlineAssets": true,
+    "saveAllAttempts": false,
+    "ignoreVideos": false,
+    "videoOnFailOnly": true
+  },
+  "reporters": [
+    {
+      "name": "mochawesome",
+      "options": {
+        "reportDir": "tests/reports/mochawesome",
+        "quiet": true,
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "timestamp": "mmddyyyy_HHMMss",
+        "reportFilename": "test-results-[hash]",
+        "reportPageTitle": "E2E Test Results",
+        "reportTitle": "Automation Test Suite Results",
+        "embeddedScreenshots": true,
+        "inlineAssets": true,
+        "saveAllAttempts": false,
+        "charts": true,
+        "code": true,
+        "autoOpen": false,
+        "showPassed": true,
+        "showFailed": true,
+        "showPending": true,
+        "showSkipped": false,
+        "showHooks": "failed",
+        "useInlineDiffs": false,
+        "enableCharts": true,
+        "enableCode": true
+      }
+    },
+    {
+      "name": "junit",
+      "options": {
+        "mochaFile": "tests/reports/junit/test-results-[hash].xml",
+        "toConsole": false,
+        "attachments": true,
+        "jenkinsMode": true,
+        "rootSuiteTitle": "E2E Tests",
+        "testsuitesTitle": "Test Suites",
+        "testCaseSwitchClassnameAndName": false,
+        "suiteTitleSeparatedBy": ".",
+        "useFullSuiteTitle": true
+      }
+    }
+  ]
+} 

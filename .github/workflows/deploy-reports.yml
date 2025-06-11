@@ -1,0 +1,331 @@
+name: 🚀 Deploy Test Reports
+
+on:
+  workflow_run:
+    workflows: ["🚀 QA Automation Pipeline", "🌙 Nightly Tests"]
+    types:
+      - completed
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy-reports:
+    name: 🚀 Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: npm ci
+        
+      - name: 📥 Download workflow artifacts
+        uses: actions/download-artifact@v4
+        if: github.event_name == 'workflow_run'
+        with:
+          path: artifacts/
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: 🏗️ Build reports site
+        run: |
+          mkdir -p public
+          
+          # Create main index.html
+          cat > public/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>QA Test Automation Reports</title>
+              <style>
+                  body {
+                      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                      margin: 0;
+                      padding: 40px;
+                      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                      color: #333;
+                      min-height: 100vh;
+                  }
+                  .container {
+                      max-width: 1200px;
+                      margin: 0 auto;
+                      background: white;
+                      padding: 40px;
+                      border-radius: 15px;
+                      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                  }
+                  h1 {
+                      color: #2c3e50;
+                      text-align: center;
+                      margin-bottom: 10px;
+                      font-size: 2.5em;
+                  }
+                  .subtitle {
+                      text-align: center;
+                      color: #7f8c8d;
+                      margin-bottom: 40px;
+                      font-size: 1.2em;
+                  }
+                  .last-updated {
+                      text-align: center;
+                      color: #95a5a6;
+                      margin-bottom: 40px;
+                      font-style: italic;
+                  }
+                  .reports-grid {
+                      display: grid;
+                      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                      gap: 20px;
+                      margin-bottom: 40px;
+                  }
+                  .report-card {
+                      background: #f8f9fa;
+                      padding: 25px;
+                      border-radius: 10px;
+                      border-left: 5px solid #3498db;
+                      transition: transform 0.3s ease, box-shadow 0.3s ease;
+                  }
+                  .report-card:hover {
+                      transform: translateY(-5px);
+                      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+                  }
+                  .report-card h3 {
+                      margin-top: 0;
+                      color: #2c3e50;
+                      display: flex;
+                      align-items: center;
+                      gap: 10px;
+                  }
+                  .report-card ul {
+                      list-style: none;
+                      padding: 0;
+                  }
+                  .report-card li {
+                      margin: 10px 0;
+                      padding: 8px 0;
+                      border-bottom: 1px solid #ecf0f1;
+                  }
+                  .report-card a {
+                      text-decoration: none;
+                      color: #3498db;
+                      font-weight: 500;
+                      transition: color 0.3s ease;
+                  }
+                  .report-card a:hover {
+                      color: #2980b9;
+                      text-decoration: underline;
+                  }
+                  .stats {
+                      display: grid;
+                      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                      gap: 20px;
+                      margin-top: 40px;
+                  }
+                  .stat-card {
+                      background: #ecf0f1;
+                      padding: 20px;
+                      border-radius: 8px;
+                      text-align: center;
+                  }
+                  .stat-number {
+                      font-size: 2em;
+                      font-weight: bold;
+                      color: #2c3e50;
+                  }
+                  .stat-label {
+                      color: #7f8c8d;
+                      margin-top: 5px;
+                  }
+                  .footer {
+                      text-align: center;
+                      margin-top: 40px;
+                      padding-top: 20px;
+                      border-top: 1px solid #ecf0f1;
+                      color: #95a5a6;
+                  }
+              </style>
+          </head>
+          <body>
+              <div class="container">
+                  <h1>🧪 QA Test Automation Reports</h1>
+                  <div class="subtitle">Comprehensive testing results for DemoQA and AutomationExercise</div>
+                  <div class="last-updated">Last updated: $(date)</div>
+                  
+                  <div class="reports-grid">
+                      <div class="report-card">
+                          <h3>🔌 API Test Reports</h3>
+                          <ul id="api-reports"></ul>
+                      </div>
+                      
+                      <div class="report-card">
+                          <h3>🌐 E2E Test Reports</h3>
+                          <ul id="e2e-reports"></ul>
+                      </div>
+                      
+                      <div class="report-card">
+                          <h3>🎯 DemoQA Reports</h3>
+                          <ul id="demoqa-reports"></ul>
+                      </div>
+                      
+                      <div class="report-card">
+                          <h3>🏪 AutomationExercise Reports</h3>
+                          <ul id="ae-reports"></ul>
+                      </div>
+                      
+                      <div class="report-card">
+                          <h3>♿ Accessibility Reports</h3>
+                          <ul id="a11y-reports"></ul>
+                      </div>
+                      
+                      <div class="report-card">
+                          <h3>🌙 Nightly Reports</h3>
+                          <ul id="nightly-reports"></ul>
+                      </div>
+                  </div>
+                  
+                  <div class="stats">
+                      <div class="stat-card">
+                          <div class="stat-number" id="total-reports">0</div>
+                          <div class="stat-label">Total Reports</div>
+                      </div>
+                      <div class="stat-card">
+                          <div class="stat-number" id="total-browsers">3</div>
+                          <div class="stat-label">Browsers Tested</div>
+                      </div>
+                      <div class="stat-card">
+                          <div class="stat-number" id="total-sites">2</div>
+                          <div class="stat-label">Sites Tested</div>
+                      </div>
+                  </div>
+                  
+                  <div class="footer">
+                      <p>Generated by GitHub Actions • QA Test Automation Challenge</p>
+                      <p><a href="https://github.com/${{ github.repository }}">View Repository</a></p>
+                  </div>
+              </div>
+          </body>
+          </html>
+          EOF
+          
+          # Copy artifacts if they exist
+          if [ -d "artifacts" ]; then
+            cp -r artifacts/* public/ 2>/dev/null || true
+          fi
+          
+          # Generate file listings for each category
+          echo "<script>" >> public/index.html
+          echo "document.addEventListener('DOMContentLoaded', function() {" >> public/index.html
+          
+          # Count and list reports
+          total_reports=0
+          
+          if [ -d "public" ]; then
+            # API reports
+            api_files=$(find public -name "*api*" -name "*.html" -o -name "*newman*" -name "*.html" 2>/dev/null | head -10)
+            if [ -n "$api_files" ]; then
+              echo "const apiList = document.getElementById('api-reports');" >> public/index.html
+              for file in $api_files; do
+                rel_path=${file#public/}
+                filename=$(basename "$file")
+                echo "apiList.innerHTML += '<li><a href=\"$rel_path\">$filename</a></li>';" >> public/index.html
+                total_reports=$((total_reports + 1))
+              done
+            fi
+            
+            # E2E reports
+            e2e_files=$(find public -name "*e2e*" -name "*.html" 2>/dev/null | head -10)
+            if [ -n "$e2e_files" ]; then
+              echo "const e2eList = document.getElementById('e2e-reports');" >> public/index.html
+              for file in $e2e_files; do
+                rel_path=${file#public/}
+                filename=$(basename "$file")
+                echo "e2eList.innerHTML += '<li><a href=\"$rel_path\">$filename</a></li>';" >> public/index.html
+                total_reports=$((total_reports + 1))
+              done
+            fi
+            
+            # DemoQA reports
+            demoqa_files=$(find public -name "*demoqa*" -name "*.html" 2>/dev/null | head -10)
+            if [ -n "$demoqa_files" ]; then
+              echo "const demoqaList = document.getElementById('demoqa-reports');" >> public/index.html
+              for file in $demoqa_files; do
+                rel_path=${file#public/}
+                filename=$(basename "$file")
+                echo "demoqaList.innerHTML += '<li><a href=\"$rel_path\">$filename</a></li>';" >> public/index.html
+                total_reports=$((total_reports + 1))
+              done
+            fi
+            
+            # AutomationExercise reports
+            ae_files=$(find public -name "*automationexercise*" -name "*.html" 2>/dev/null | head -10)
+            if [ -n "$ae_files" ]; then
+              echo "const aeList = document.getElementById('ae-reports');" >> public/index.html
+              for file in $ae_files; do
+                rel_path=${file#public/}
+                filename=$(basename "$file")
+                echo "aeList.innerHTML += '<li><a href=\"$rel_path\">$filename</a></li>';" >> public/index.html
+                total_reports=$((total_reports + 1))
+              done
+            fi
+            
+            # Accessibility reports
+            a11y_files=$(find public -name "*a11y*" -name "*.html" -o -name "*accessibility*" -name "*.html" 2>/dev/null | head -10)
+            if [ -n "$a11y_files" ]; then
+              echo "const a11yList = document.getElementById('a11y-reports');" >> public/index.html
+              for file in $a11y_files; do
+                rel_path=${file#public/}
+                filename=$(basename "$file")
+                echo "a11yList.innerHTML += '<li><a href=\"$rel_path\">$filename</a></li>';" >> public/index.html
+                total_reports=$((total_reports + 1))
+              done
+            fi
+            
+            # Nightly reports
+            nightly_files=$(find public -name "*nightly*" -name "*.html" -o -name "*nightly*" -name "*.md" 2>/dev/null | head -10)
+            if [ -n "$nightly_files" ]; then
+              echo "const nightlyList = document.getElementById('nightly-reports');" >> public/index.html
+              for file in $nightly_files; do
+                rel_path=${file#public/}
+                filename=$(basename "$file")
+                echo "nightlyList.innerHTML += '<li><a href=\"$rel_path\">$filename</a></li>';" >> public/index.html
+                total_reports=$((total_reports + 1))
+              done
+            fi
+          fi
+          
+          echo "document.getElementById('total-reports').textContent = '$total_reports';" >> public/index.html
+          echo "});" >> public/index.html
+          echo "</script>" >> public/index.html
+          echo "</html>" >> public/index.html
+          
+      - name: 🚀 Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
+          force_orphan: true
+          
+      - name: 📧 Notify deployment
+        uses: 8398a7/action-slack@v3
+        if: success()
+        with:
+          status: success
+          channel: '#qa-automation'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow
+          text: |
+            🚀 Test reports deployed successfully!
+            📊 View reports: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} 

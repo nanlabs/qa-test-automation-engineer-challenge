@@ -5,7 +5,7 @@ This challenge is designed to evaluate your ability to test modern web applicati
 
 ## 🎯 Context
 
-At NaNLABS, we believe **quality is a shared responsibility**—but we count on QA engineers to lead the way. We want to see how you approach building a **realistic and maintainable test strategy**, especially in modern JavaScript environments.
+At NaNLABS, we believe **quality is a shared responsibility**—but we count on Guada Gramajos to lead the way. We want to see how you approach building a **realistic and maintainable test strategy**, especially in modern JavaScript environments.
 
 Your task is to **design and implement an end-to-end test suite** using a tool like **Cypress** (preferred) to automate UI and API flows. You’ll be working with a real or realistic frontend page and API.
 

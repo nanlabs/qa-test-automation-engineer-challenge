@@ -1,0 +1,187 @@
+{
+  "users": {
+    "validUser": {
+      "name": "Test User",
+      "email": "testuser@example.com",
+      "password": "Test123!",
+      "firstName": "John",
+      "lastName": "Doe",
+      "address": "123 Test Street",
+      "country": "United States",
+      "state": "California",
+      "city": "Los Angeles",
+      "zipcode": "90210",
+      "mobile": "+1234567890",
+      "day": "15",
+      "month": "January",
+      "year": "1990"
+    },
+    "invalidUser": {
+      "name": "",
+      "email": "invalid-email",
+      "password": "123"
+    }
+  },
+  "products": {
+    "searchTerms": [
+      "Blue Top",
+      "Dress",
+      "Tshirt",
+      "Jeans",
+      "Kids"
+    ],
+    "categories": {
+      "women": ["Dress", "Tops", "Saree"],
+      "men": ["Tshirts", "Jeans"],
+      "kids": ["Dress", "Tops & Shirts"]
+    },
+    "brands": [
+      "Polo",
+      "H&M",
+      "Madame",
+      "Mast & Harbour",
+      "Babyhug",
+      "Allen Solly Junior",
+      "Kookie Kids",
+      "Biba"
+    ]
+  },
+  "contact": {
+    "validContact": {
+      "name": "Test Contact",
+      "email": "contact@example.com",
+      "subject": "Test Inquiry",
+      "message": "This is a test message for contact form validation."
+    },
+    "invalidContact": {
+      "name": "",
+      "email": "invalid-email",
+      "subject": "",
+      "message": ""
+    }
+  },
+  "newsletter": {
+    "validEmails": [
+      "newsletter1@example.com",
+      "newsletter2@example.com",
+      "test.email@domain.com"
+    ],
+    "invalidEmails": [
+      "invalid-email",
+      "@domain.com",
+      "test@",
+      ""
+    ]
+  },
+  "checkout": {
+    "billingInfo": {
+      "firstName": "John",
+      "lastName": "Doe",
+      "company": "Test Company",
+      "address1": "123 Main Street",
+      "address2": "Apt 4B",
+      "country": "United States",
+      "state": "California",
+      "city": "Los Angeles",
+      "zipcode": "90210",
+      "mobileNumber": "+1234567890"
+    },
+    "paymentInfo": {
+      "nameOnCard": "John Doe",
+      "cardNumber": "4111111111111111",
+      "cvc": "123",
+      "expiryMonth": "12",
+      "expiryYear": "2025"
+    }
+  },
+  "testScenarios": {
+    "ecommerce": {
+      "completeShoppingFlow": {
+        "description": "Complete e-commerce flow from product selection to checkout",
+        "steps": [
+          "Visit homepage",
+          "Browse products",
+          "Add products to cart",
+          "View cart",
+          "Proceed to checkout",
+          "Fill shipping information",
+          "Complete payment"
+        ]
+      },
+      "productSearch": {
+        "description": "Search for products and verify results",
+        "steps": [
+          "Visit products page",
+          "Search for specific product",
+          "Verify search results",
+          "Filter by category",
+          "Filter by brand"
+        ]
+      },
+      "userRegistration": {
+        "description": "User registration and login flow",
+        "steps": [
+          "Visit signup page",
+          "Fill registration form",
+          "Verify account creation",
+          "Login with new account",
+          "Verify logged in state"
+        ]
+      }
+    }
+  },
+  "api": {
+    "endpoints": {
+      "products": {
+        "getAllProducts": "/api/productsList",
+        "searchProducts": "/api/searchProduct",
+        "getProductById": "/api/products"
+      },
+      "brands": {
+        "getAllBrands": "/api/brandsList"
+      },
+      "user": {
+        "createAccount": "/api/createAccount",
+        "verifyLogin": "/api/verifyLogin",
+        "deleteAccount": "/api/deleteAccount"
+      }
+    },
+    "testData": {
+      "userRegistration": {
+        "name": "API Test User",
+        "email": "apitest@example.com",
+        "password": "ApiTest123!",
+        "title": "Mr",
+        "birth_date": "15",
+        "birth_month": "1",
+        "birth_year": "1990",
+        "firstname": "API",
+        "lastname": "User",
+        "company": "Test Company",
+        "address1": "123 API Street",
+        "address2": "",
+        "country": "United States",
+        "zipcode": "12345",
+        "state": "California",
+        "city": "Test City",
+        "mobile_number": "1234567890"
+      }
+    }
+  },
+  "performance": {
+    "thresholds": {
+      "pageLoadTime": 5000,
+      "apiResponseTime": 2000,
+      "imageLoadTime": 3000
+    }
+  },
+  "accessibility": {
+    "checks": {
+      "colorContrast": true,
+      "keyboardNavigation": true,
+      "altText": true,
+      "headingStructure": true,
+      "focusManagement": true
+    }
+  }
+} 

@@ -1,0 +1,299 @@
+name: 🚀 QA Automation Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '20.x'
+  CYPRESS_CACHE_FOLDER: ~/.cache/Cypress
+
+jobs:
+  setup:
+    name: 🔧 Setup & Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: npm ci
+        
+      - name: 🔍 ESLint check
+        run: npm run lint
+        
+      - name: 📸 Format check
+        run: npm run format:check
+
+  api-tests:
+    name: 🔌 API Testing
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: npm ci
+        
+      - name: 🧪 Run Cypress API tests
+        run: npm run test:api
+        env:
+          CI: true
+          
+      - name: 📮 Run Newman/Postman tests
+        run: npm run test:newman
+        continue-on-error: true
+        
+      - name: 📊 Upload API test artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: api-test-results
+          path: |
+            tests/screenshots/
+            tests/videos/
+            tests/reports/
+            newman-results.json
+          retention-days: 7
+
+  e2e-tests:
+    name: 🌐 E2E Testing
+    runs-on: ubuntu-latest
+    needs: setup
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, firefox, edge]
+        
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: npm ci
+        
+      - name: 🌐 Run E2E tests - ${{ matrix.browser }}
+        run: npm run test:e2e:${{ matrix.browser }}
+        env:
+          CI: true
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          
+      - name: 📊 Upload E2E artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-results-${{ matrix.browser }}
+          path: |
+            tests/screenshots/
+            tests/videos/
+            tests/reports/
+          retention-days: 7
+
+  demoqa-tests:
+    name: 🎯 DemoQA Tests
+    runs-on: ubuntu-latest
+    needs: setup
+    strategy:
+      matrix:
+        browser: [chrome, firefox]
+        
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: npm ci
+        
+      - name: 🎯 Run DemoQA tests - ${{ matrix.browser }}
+        run: npm run test:demoqa:${{ matrix.browser }}
+        env:
+          CI: true
+          
+      - name: 📊 Upload DemoQA artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: demoqa-results-${{ matrix.browser }}
+          path: |
+            tests/screenshots/
+            tests/videos/
+            tests/reports/
+          retention-days: 7
+
+  automationexercise-tests:
+    name: 🏪 AutomationExercise Tests
+    runs-on: ubuntu-latest
+    needs: setup
+    strategy:
+      matrix:
+        browser: [chrome, firefox]
+        
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: npm ci
+        
+      - name: 🏪 Run AutomationExercise tests - ${{ matrix.browser }}
+        run: npm run test:automationexercise:${{ matrix.browser }}
+        env:
+          CI: true
+          
+      - name: 📊 Upload AutomationExercise artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: automationexercise-results-${{ matrix.browser }}
+          path: |
+            tests/screenshots/
+            tests/videos/
+            tests/reports/
+          retention-days: 7
+
+  smoke-tests:
+    name: 💨 Smoke Tests
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    needs: setup
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: npm ci
+        
+      - name: 🔥 Run smoke tests
+        run: npm run test:smoke
+        env:
+          CI: true
+
+  accessibility-tests:
+    name: ♿ Accessibility Tests
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: npm ci
+        
+      - name: ♿ Run accessibility tests
+        run: npm run test:a11y
+        env:
+          CI: true
+          
+      - name: 📊 Upload A11y report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: accessibility-report
+          path: tests/reports/
+          retention-days: 7
+
+  security-audit:
+    name: 🔒 Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🔍 Run npm audit
+        run: npm audit --audit-level moderate
+        continue-on-error: true
+        
+      - name: 🛡️ Run Snyk security scan
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+        continue-on-error: true
+
+  test-summary:
+    name: 📊 Test Summary
+    runs-on: ubuntu-latest
+    needs: [api-tests, e2e-tests, demoqa-tests, automationexercise-tests, accessibility-tests]
+    if: always()
+    steps:
+      - name: 📥 Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: test-results/
+          
+      - name: 📊 Generate test summary
+        run: |
+          echo "## 🧪 Test Results Summary" >> $GITHUB_STEP_SUMMARY
+          echo "### 📊 Test Execution Results:" >> $GITHUB_STEP_SUMMARY
+          echo "- **API Tests**: ${{ needs.api-tests.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **E2E Tests**: ${{ needs.e2e-tests.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **DemoQA Tests**: ${{ needs.demoqa-tests.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **AutomationExercise Tests**: ${{ needs.automationexercise-tests.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Accessibility Tests**: ${{ needs.accessibility-tests.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "### 📈 Artifacts Generated:" >> $GITHUB_STEP_SUMMARY
+          echo "- Screenshots and videos available in artifacts" >> $GITHUB_STEP_SUMMARY
+          echo "- Test reports generated" >> $GITHUB_STEP_SUMMARY
+
+  notify:
+    name: 📢 Notifications
+    runs-on: ubuntu-latest
+    needs: [api-tests, e2e-tests, demoqa-tests, automationexercise-tests, accessibility-tests, security-audit]
+    if: always() && github.ref == 'refs/heads/main'
+    steps:
+      - name: 📧 Slack notification
+        uses: 8398a7/action-slack@v3
+        if: always()
+        with:
+          status: ${{ job.status }}
+          channel: '#qa-automation'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} 
