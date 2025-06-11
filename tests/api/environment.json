@@ -1,0 +1,54 @@
+{
+  "name": "AutomationExercise Environment",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "https://automationexercise.com",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "testUserName",
+      "value": "API Test User",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "testPassword",
+      "value": "ApiTest123!",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "testEmail",
+      "value": "apitest@example.com",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "searchTerm",
+      "value": "blue",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "productId",
+      "value": "1",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "maxResponseTime",
+      "value": "2000",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "apiVersion",
+      "value": "v1",
+      "enabled": true,
+      "type": "default"
+    }
+  ],
+  "_postman_variable_scope": "environment"
+} 

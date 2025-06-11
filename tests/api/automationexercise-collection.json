@@ -1,0 +1,82 @@
+{
+  "info": {
+    "name": "AutomationExercise API Tests",
+    "description": "API test collection for AutomationExercise website",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Get All Products",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/productsList",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "productsList"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response has products', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('products');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search Products",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/x-www-form-urlencoded"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "search_product",
+              "value": "blue"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/searchProduct",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "searchProduct"]
+        }
+      }
+    },
+    {
+      "name": "Get All Brands",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/brandsList",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "brandsList"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://automationexercise.com"
+    }
+  ]
+} 

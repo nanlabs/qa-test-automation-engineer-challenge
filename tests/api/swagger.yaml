@@ -1,0 +1,445 @@
+openapi: 3.0.3
+info:
+  title: AutomationExercise API
+  description: |
+    API documentation for AutomationExercise website endpoints.
+    This API provides access to products, brands, and user management functionality.
+    
+    **Base URL**: https://automationexercise.com/api
+    
+    **Authentication**: No authentication required for most endpoints
+    
+    **Response Format**: All endpoints return JSON responses with a consistent structure
+  version: 1.0.0
+  contact:
+    name: QA Test Team
+    email: qa@example.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://automationexercise.com/api
+    description: Production server
+
+paths:
+  /productsList:
+    get:
+      tags:
+        - Products
+      summary: Get all products
+      description: Retrieve a list of all available products
+      operationId: getAllProducts
+      responses:
+        '200':
+          description: Successful response with products list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductsResponse'
+              example:
+                responseCode: 200
+                products:
+                  - id: 1
+                    name: "Blue Top"
+                    price: "Rs. 500"
+                    brand: "H&M"
+                    category:
+                      usertype:
+                        usertype: "Women"
+                      category: "Tops"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /searchProduct:
+    post:
+      tags:
+        - Products
+      summary: Search products
+      description: Search for products by name or keyword
+      operationId: searchProducts
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                search_product:
+                  type: string
+                  description: Search term for products
+                  example: "blue"
+              required:
+                - search_product
+      responses:
+        '200':
+          description: Successful search response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductsResponse'
+        '400':
+          description: Bad request - missing search parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /brandsList:
+    get:
+      tags:
+        - Brands
+      summary: Get all brands
+      description: Retrieve a list of all available brands
+      operationId: getAllBrands
+      responses:
+        '200':
+          description: Successful response with brands list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandsResponse'
+              example:
+                responseCode: 200
+                brands:
+                  - id: 1
+                    brand: "Polo"
+                  - id: 2
+                    brand: "H&M"
+                  - id: 3
+                    brand: "Madame"
+
+  /createAccount:
+    post:
+      tags:
+        - User Management
+      summary: Create user account
+      description: Create a new user account with provided details
+      operationId: createAccount
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateAccountRequest'
+      responses:
+        '201':
+          description: Account created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAccountResponse'
+        '400':
+          description: Bad request - validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Email already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /verifyLogin:
+    post:
+      tags:
+        - User Management
+      summary: Verify user login
+      description: Verify user credentials for login
+      operationId: verifyLogin
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: User email address
+                  example: "user@example.com"
+                password:
+                  type: string
+                  description: User password
+                  example: "password123"
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: Login verification response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /deleteAccount:
+    delete:
+      tags:
+        - User Management
+      summary: Delete user account
+      description: Delete a user account
+      operationId: deleteAccount
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: User email address
+                password:
+                  type: string
+                  description: User password
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: Account deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteAccountResponse'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique product identifier
+          example: 1
+        name:
+          type: string
+          description: Product name
+          example: "Blue Top"
+        price:
+          type: string
+          description: Product price in Indian Rupees
+          example: "Rs. 500"
+        brand:
+          type: string
+          description: Product brand
+          example: "H&M"
+        category:
+          $ref: '#/components/schemas/Category'
+      required:
+        - id
+        - name
+        - price
+
+    Category:
+      type: object
+      properties:
+        usertype:
+          type: object
+          properties:
+            usertype:
+              type: string
+              enum: ["Women", "Men", "Kids"]
+              example: "Women"
+        category:
+          type: string
+          example: "Tops"
+
+    Brand:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique brand identifier
+          example: 1
+        brand:
+          type: string
+          description: Brand name
+          example: "Polo"
+      required:
+        - id
+        - brand
+
+    ProductsResponse:
+      type: object
+      properties:
+        responseCode:
+          type: integer
+          example: 200
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+      required:
+        - responseCode
+        - products
+
+    BrandsResponse:
+      type: object
+      properties:
+        responseCode:
+          type: integer
+          example: 200
+        brands:
+          type: array
+          items:
+            $ref: '#/components/schemas/Brand'
+      required:
+        - responseCode
+        - brands
+
+    CreateAccountRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: User's full name
+          example: "John Doe"
+        email:
+          type: string
+          format: email
+          description: User's email address
+          example: "john.doe@example.com"
+        password:
+          type: string
+          description: User's password
+          example: "securePassword123"
+        title:
+          type: string
+          enum: ["Mr", "Mrs"]
+          description: User's title
+          example: "Mr"
+        birth_date:
+          type: string
+          description: Birth date (1-31)
+          example: "15"
+        birth_month:
+          type: string
+          description: Birth month (1-12)
+          example: "6"
+        birth_year:
+          type: string
+          description: Birth year
+          example: "1990"
+        firstname:
+          type: string
+          description: First name
+          example: "John"
+        lastname:
+          type: string
+          description: Last name
+          example: "Doe"
+        company:
+          type: string
+          description: Company name
+          example: "Tech Corp"
+        address1:
+          type: string
+          description: Primary address
+          example: "123 Main Street"
+        address2:
+          type: string
+          description: Secondary address
+          example: "Apt 4B"
+        country:
+          type: string
+          description: Country
+          example: "United States"
+        zipcode:
+          type: string
+          description: ZIP/Postal code
+          example: "12345"
+        state:
+          type: string
+          description: State/Province
+          example: "California"
+        city:
+          type: string
+          description: City
+          example: "Los Angeles"
+        mobile_number:
+          type: string
+          description: Mobile phone number
+          example: "1234567890"
+      required:
+        - name
+        - email
+        - password
+
+    CreateAccountResponse:
+      type: object
+      properties:
+        responseCode:
+          type: integer
+          example: 201
+        message:
+          type: string
+          example: "User created!"
+
+    LoginResponse:
+      type: object
+      properties:
+        responseCode:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: "User exists!"
+
+    DeleteAccountResponse:
+      type: object
+      properties:
+        responseCode:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: "Account deleted!"
+
+    ErrorResponse:
+      type: object
+      properties:
+        responseCode:
+          type: integer
+          description: HTTP status code
+          example: 404
+        message:
+          type: string
+          description: Error message
+          example: "This request method is not supported."
+      required:
+        - responseCode
+        - message
+
+tags:
+  - name: Products
+    description: Product-related operations
+  - name: Brands
+    description: Brand-related operations
+  - name: User Management
+    description: User account management operations
+
+externalDocs:
+  description: AutomationExercise Website
+  url: https://automationexercise.com 

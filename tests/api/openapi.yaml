@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  title: AutomationExercise API
+  description: API documentation for AutomationExercise website
+  version: 1.0.0
+servers:
+  - url: https://automationexercise.com/api
+paths:
+  /productsList:
+    get:
+      summary: Get all products
+      responses:
+        '200':
+          description: Products retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        price:
+                          type: string
+  /searchProduct:
+    post:
+      summary: Search products
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                search_product:
+                  type: string
+      responses:
+        '200':
+          description: Search results
+  /brandsList:
+    get:
+      summary: Get all brands
+      responses:
+        '200':
+          description: Brands retrieved successfully 

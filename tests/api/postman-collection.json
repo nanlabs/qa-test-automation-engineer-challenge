@@ -1,0 +1,566 @@
+{
+  "info": {
+    "name": "AutomationExercise API Tests",
+    "description": "Comprehensive API test collection for AutomationExercise website",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Products API",
+      "item": [
+        {
+          "name": "Get All Products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response has products array', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('products');",
+                  "    pm.expect(jsonData.products).to.be.an('array');",
+                  "    pm.expect(jsonData.products.length).to.be.greaterThan(0);",
+                  "});",
+                  "",
+                  "pm.test('Product has required fields', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    const firstProduct = jsonData.products[0];",
+                  "    pm.expect(firstProduct).to.have.property('id');",
+                  "    pm.expect(firstProduct).to.have.property('name');",
+                  "    pm.expect(firstProduct).to.have.property('price');",
+                  "});",
+                  "",
+                  "pm.test('Response time is less than 2000ms', function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/productsList",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "productsList"]
+            }
+          }
+        },
+        {
+          "name": "Search Products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Search returns relevant products', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('products');",
+                  "    pm.expect(jsonData.products).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test('Search term is found in results', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    const searchTerm = pm.request.body.formdata.get('search_product');",
+                  "    if (jsonData.products.length > 0) {",
+                  "        const productNames = jsonData.products.map(p => p.name.toLowerCase());",
+                  "        const hasMatch = productNames.some(name => name.includes(searchTerm.toLowerCase()));",
+                  "        pm.expect(hasMatch).to.be.true;",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "search_product",
+                  "value": "blue",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/searchProduct",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "searchProduct"]
+            }
+          }
+        },
+        {
+          "name": "Get Product by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Product details are returned', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('product');",
+                  "    pm.expect(jsonData.product).to.have.property('id');",
+                  "    pm.expect(jsonData.product).to.have.property('name');",
+                  "    pm.expect(jsonData.product).to.have.property('price');",
+                  "    pm.expect(jsonData.product).to.have.property('category');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Brands API",
+      "item": [
+        {
+          "name": "Get All Brands",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response has brands array', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('brands');",
+                  "    pm.expect(jsonData.brands).to.be.an('array');",
+                  "    pm.expect(jsonData.brands.length).to.be.greaterThan(0);",
+                  "});",
+                  "",
+                  "pm.test('Brand has required fields', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    const firstBrand = jsonData.brands[0];",
+                  "    pm.expect(firstBrand).to.have.property('id');",
+                  "    pm.expect(firstBrand).to.have.property('brand');",
+                  "});",
+                  "",
+                  "pm.test('Known brands are present', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    const brandNames = jsonData.brands.map(b => b.brand);",
+                  "    pm.expect(brandNames).to.include.members(['Polo', 'H&M', 'Madame']);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/brandsList",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "brandsList"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Management API",
+      "item": [
+        {
+          "name": "Create Account",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Generate unique email for test",
+                  "const timestamp = Date.now();",
+                  "const testEmail = `test${timestamp}@example.com`;",
+                  "pm.environment.set('testEmail', testEmail);"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201 or 200', function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  "",
+                  "pm.test('Account creation response', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('responseCode');",
+                  "    if (jsonData.responseCode === 201) {",
+                  "        pm.expect(jsonData.message).to.include('User created');",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "{{testUserName}}",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "{{testEmail}}",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "{{testPassword}}",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Mr",
+                  "type": "text"
+                },
+                {
+                  "key": "birth_date",
+                  "value": "15",
+                  "type": "text"
+                },
+                {
+                  "key": "birth_month",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "birth_year",
+                  "value": "1990",
+                  "type": "text"
+                },
+                {
+                  "key": "firstname",
+                  "value": "Test",
+                  "type": "text"
+                },
+                {
+                  "key": "lastname",
+                  "value": "User",
+                  "type": "text"
+                },
+                {
+                  "key": "company",
+                  "value": "Test Company",
+                  "type": "text"
+                },
+                {
+                  "key": "address1",
+                  "value": "123 Test Street",
+                  "type": "text"
+                },
+                {
+                  "key": "country",
+                  "value": "United States",
+                  "type": "text"
+                },
+                {
+                  "key": "zipcode",
+                  "value": "12345",
+                  "type": "text"
+                },
+                {
+                  "key": "state",
+                  "value": "California",
+                  "type": "text"
+                },
+                {
+                  "key": "city",
+                  "value": "Los Angeles",
+                  "type": "text"
+                },
+                {
+                  "key": "mobile_number",
+                  "value": "1234567890",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/createAccount",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "createAccount"]
+            }
+          }
+        },
+        {
+          "name": "Verify Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Login verification response', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('responseCode');",
+                  "    pm.expect(jsonData).to.have.property('message');",
+                  "});",
+                  "",
+                  "pm.test('Valid credentials return success', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    if (jsonData.responseCode === 200) {",
+                  "        pm.expect(jsonData.message).to.include('User exists');",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "email",
+                  "value": "{{testEmail}}",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "{{testPassword}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/verifyLogin",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "verifyLogin"]
+            }
+          }
+        },
+        {
+          "name": "Delete Account",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Account deletion response', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('responseCode');",
+                  "    pm.expect(jsonData).to.have.property('message');",
+                  "});",
+                  "",
+                  "pm.test('Account deleted successfully', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    if (jsonData.responseCode === 200) {",
+                  "        pm.expect(jsonData.message).to.include('Account deleted');",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "email",
+                  "value": "{{testEmail}}",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "{{testPassword}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/deleteAccount",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "deleteAccount"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Error Handling Tests",
+      "item": [
+        {
+          "name": "Invalid Endpoint",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 404', function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "pm.test('Error response format', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('responseCode', 404);",
+                  "    pm.expect(jsonData).to.have.property('message');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/invalidEndpoint",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "invalidEndpoint"]
+            }
+          }
+        },
+        {
+          "name": "Invalid HTTP Method",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 405', function () {",
+                  "    pm.response.to.have.status(405);",
+                  "});",
+                  "",
+                  "pm.test('Method not allowed response', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('responseCode', 405);",
+                  "    pm.expect(jsonData.message).to.include('not supported');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/productsList",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "productsList"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Set default values if not already set",
+          "if (!pm.environment.get('baseUrl')) {",
+          "    pm.environment.set('baseUrl', 'https://automationexercise.com');",
+          "}",
+          "",
+          "if (!pm.environment.get('testUserName')) {",
+          "    pm.environment.set('testUserName', 'Test User');",
+          "}",
+          "",
+          "if (!pm.environment.get('testPassword')) {",
+          "    pm.environment.set('testPassword', 'Test123!');",
+          "}"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Global test to check response format",
+          "pm.test('Response is JSON', function () {",
+          "    pm.response.to.be.json;",
+          "});",
+          "",
+          "// Log response time for monitoring",
+          "console.log('Response time:', pm.response.responseTime + 'ms');"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://automationexercise.com",
+      "type": "string"
+    }
+  ]
+} 
