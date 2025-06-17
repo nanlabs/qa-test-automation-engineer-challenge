@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       spec:
-        description: 'Cypress spec pattern (e.g. cypress/e2e/login.cy.ts)'
+        description: 'Cypress spec pattern (e.g. cypress/e2e/logIn_user.cy.ts)'
         required: false
         default: ''
 

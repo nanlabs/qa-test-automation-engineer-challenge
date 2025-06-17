@@ -34,6 +34,8 @@ To execute the tests in this repository, follow these steps:
 ---
 
 This repository also has the test triggered on every pull request.
+Its defaulted to run all specs files, to execute a specific, use the path of the spec files as parameter
+cypress/e2e/logOut_user.cy.ts
 
 ## Improvements
 
