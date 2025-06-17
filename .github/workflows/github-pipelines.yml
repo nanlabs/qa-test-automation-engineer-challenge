@@ -1,0 +1,65 @@
+name: Cypress actions config
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+  regression-tests:
+    runs-on: ubuntu-latest
+    needs: install
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, firefox]
+        device: [mobile, tablet, desktop]  
+        containers: [1] #To be increased setting a Cypress dashboard and parallel=true on Run cypress tests
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Run Cypress tests on  ${{ matrix.browser }} - ${{ matrix.device }}
+        uses: cypress-io/github-action@v6
+        with:
+          browser: ${{ matrix.browser }}
+          headless: true
+          env: device=${{ matrix.device }},environment=stg
+
+      - name: Merge Mochawesome reports
+        if: always()
+        run: |
+          npx mochawesome-merge cypress/reports/mochawesome/*.json > mochawesome.json
+          npx marge mochawesome.json -f report -o cypress/reports/mochawesome/html
+
+      - name: Upload test report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mochawesome-report-${{ matrix.browser }}-${{ matrix.device }}-${{ matrix.containers }}
+          path: cypress/reports/mochawesome/html/
