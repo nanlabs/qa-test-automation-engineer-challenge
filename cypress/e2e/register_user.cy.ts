@@ -3,7 +3,7 @@ import homePage from '../pages/HomePage';
 import loginPage from '../pages/LoginPage';
 import signupPage from '../pages/SignUpPage';
 import deleteAccountPage from '../pages/DeleteAccountPage';
-import { createUser, verifyUserLoggedIn } from '../utils/Helper';
+import { createUser, verifyUserDetailByEmail, verifyUserLoggedIn } from '../utils/Helper';
 import { User } from '../data/user';
 
 describe('Test Case 1: Register User', () => {
@@ -40,7 +40,8 @@ describe('Test Case 1: Register User', () => {
     // Verify that 'ACCOUNT CREATED!' is visible
     signupPage.verifyAccountCreated();
     signupPage.clickContinueButton();
-
+    //Get the user object from the API and match it with the userData generated for the test
+    verifyUserDetailByEmail(userData);
     // Verify that 'Logged in as username' is visible
     homePage.navbar.verifyLoggedInAs(userData.name);
     verifyUserLoggedIn(userData.email, userData.password);

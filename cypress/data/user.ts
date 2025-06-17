@@ -4,7 +4,6 @@ export type User = {
   lastName: string;
   name: string;
   email: string;
-  isActive: boolean;
   password: string;
   dateOfBirth: {
     day: string;

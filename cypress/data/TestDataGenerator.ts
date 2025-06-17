@@ -32,7 +32,6 @@ export default class TestDataGenerator {
       title: faker.helpers.arrayElement(["Mr", "Mrs"]),
       newsletter: faker.helpers.arrayElement([true, false]),
       specialOffers: faker.helpers.arrayElement([true, false]),
-      isActive: true,
     };
   }
 
