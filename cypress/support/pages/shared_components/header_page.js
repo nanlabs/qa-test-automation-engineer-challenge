@@ -1,6 +1,6 @@
 /**
  * @author: drodriguez
- * @date: 06-16-25
+ * @date: 06-16-2025
  */
 
 const LoginPage = require("../login_page")

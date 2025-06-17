@@ -1,3 +1,8 @@
+/**
+ * @author: drodriguez
+ * @date: 06-16-2025
+ */
+
 const { faker } = require('@faker-js/faker');
 const DEFAULT_PASSWORD = 'ChallengePass1$';
 

@@ -1,3 +1,8 @@
+/**
+ * @author: drodriguez
+ * @date: 06-16-2025
+ */
+
 module.exports = {
     mobile: { width: 375, height: 667 },
     tablet: { width: 768, height: 1024 },

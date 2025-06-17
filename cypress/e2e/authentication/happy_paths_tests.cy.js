@@ -1,6 +1,6 @@
 /**
  * @author: drodriguez
- * @date: 06-16-25
+ * @date: 06-16-2025
  */
 
 /// <reference types="cypress" />
@@ -15,7 +15,7 @@ describe('Authentication happy paths', () => {
 
   before(() => {
     cy.fixture('users').then((data) => {
-      userData = data[Cypress.env('environment')].login // Usa los datos específicos de ese archivo
+      userData = data[Cypress.env('environment')].login
     });
   })
 
