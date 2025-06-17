@@ -38,3 +38,5 @@ This repository also has the test triggered on every pull request.
 ## Improvements
 
 Fields data of signUp forms accepts any character, even emojis on the address, which is a major problem if we think on products deliveries. Having field validations and creating negative tests cases like Wrong adress, wrong phone... etc would be a nice improvement
+
+a
