@@ -1,113 +1,74 @@
-# 🧪 QA / Test Automation Engineer Challenge – Choose Your Test
+# QA / Test Automation Engineer Challenge
 
-Welcome to the **QA / Test Automation Engineer Challenge!** 🔍🧼
-This challenge is designed to evaluate your ability to test modern web applications with a strong focus on **automation, coverage, and clarity**.
-
-## 🎯 Context
-
-At NaNLABS, we believe **quality is a shared responsibility**—but we count on QA engineers to lead the way. We want to see how you approach building a **realistic and maintainable test strategy**, especially in modern JavaScript environments.
-
-Your task is to **design and implement an end-to-end test suite** using a tool like **Cypress** (preferred) to automate UI and API flows. You’ll be working with a real or realistic frontend page and API.
+This project contains authentication tests for NaNLabs automation challenge using Cypress.
 
 ---
 
-## 🕹 Choose Your Page to Test
+## 🛠️ Tool
 
-You may test **any of the following public pages**. Choose one and briefly explain why you picked it.
-
-### ✅ Suggested Test Pages
-
-Choose a known test site such as:
-
-- [https://demoqa.com](https://demoqa.com)
-- [https://the-internet.herokuapp.com](https://the-internet.herokuapp.com)
-- [https://automationexercise.com](https://automationexercise.com)
-
-Focus on testing a **specific user flow** (e.g., form submission, login process, navigation, or data filtering) using **Cypress or another modern test automation framework**.
-
-> [!NOTE]
-> You can choose a different public test site if you prefer—just make sure it’s stable, accessible, and has a clear user flow to automate.
+**Cypress**It was used Cypress because it's a modern framework highly recommended for agile projects where initial setup should be fast and stable. Cypress provides support for many integrations like Reporting, cross-browser testing, Slack, and many other tools. Have a big community that will be helpful to get additional documentation for our work.
 
 ---
 
-## 📦 Deliverables
+## 🚀 Quick Start
 
-> 📥 **Your submission must be a Pull Request that includes:**
+### Prerequisites
+- Node.js (v22 or higher)
+- Chrome and Firefox browser if we want to run locally on both browsers.
 
-- A folder with your automated test suite.
-- A `README.md` that describes:
+1. **Clone the repository** (if not already done):
+   ```bash
+   git clone https://github.com/diegohrlr/drodriguez-qa-test-automation-engineer-challenge
+   cd drodriguez-qa-test-automation-engineer-challenge
+   ```
 
-  - What tool you used and why.
-  - How to run the tests locally.
-  - What the tests cover and what could be improved with more time.
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-- Bonus (if API testing): include a few **Postman**, **Swagger**, or **Cypress API tests** that complement your UI flows.
-- Bonus (if exploratory): include an optional **manual test plan or checklist** with potential corner cases or exploratory notes.
+## 🧪 Running Tests
+**Allowed parameters and envs**:
+Environments: dev|stg|prd
+Browsers: chrome|firefox (must be installed locally)
+Devices: mobile|tablet|desktop
 
-> [!TIP]
-> You may use GitHub Actions or other CI tools to show test automation in action, but this is not required.
+### Interactive Mode
 
-## 🧪 Suggested Folder Structure
-
-```txt
-/
-├── .github/
-│   └── workflows/
-├── tests/
-│   └── e2e/
-│       └── [your_test_file].spec.js
-├── docs/
-│   └── TESTING_PLAN.md (optional)
-├── cypress.config.js (if using Cypress)
-├── README.md
-└── ...
+**Open Cypress Test Runner**:
+```bash
+npm run cypress:open --env environment=stg
 ```
 
-## 🌟 Nice to Have
+### Console Mode
 
-> 💡 **Bonus Points For:**
+**Running all tests on Chrome for all devices on STG**:
+```bash
+npm run test:chrome:all
+```
 
-- Testing across **multiple screen sizes** or devices (mobile, tablet, desktop).
-- Including **edge cases and failure handling** in your tests.
-- Including **basic test coverage metrics**.
-- Including **Postman or Swagger** examples for REST API validation.
-- Using **GitHub Actions or any CI** to run the tests on pull request.
-- Including tests that validate behavior after state changes or updates (e.g., after clicking a button, submitting a form).
+**Running all tests on Firefox for all devices on STG**:
+```bash
+npm run test:firefox:all
+```
 
-> [!TIP]
-> Want extra inspiration? Check out our **[Awesome NaNLABS repository](https://github.com/nanlabs/awesome-nan)** for tips on structure, testing tools, and automation examples.
+**Running all tests on custom browser and device**:
+```bash
+npm run test:${Browser}:${Device}
+e.g: npm run test:chrome:desktop
+```
 
-## 🧪 Submission Guidelines
+**Generate report if we run the tests on a single browser|device**:
+After execution /cypress/reports should not be empty
+```bash
+npm run report
+```
 
-> 📌 **Follow these steps to submit your solution:**
-
-1. **Fork this repository.**
-2. **Create a feature branch** with your test suite.
-3. **Commit your changes** with clear messages.
-4. **Open a Pull Request** following the provided template.
-5. **We’ll review and provide feedback.**
-
-## ✅ Evaluation Criteria
-
-> 🔍 **What we’ll be looking at:**
-
-- Coverage and clarity of your test strategy.
-- Use of best practices in test structure and tool usage.
-- Automation quality and ability to debug failing tests.
-- Clarity of README and instructions.
-- Proactive mindset: testing for edge cases, unexpected inputs, and accessibility.
-
-## 💬 Final Notes
-
-> [!TIP]
-> Don’t overthink it—we care more about how you think than about perfection!
-
-A few tips:
-
-- Pick something you're comfortable with or excited to try.
-- Make your tests easy to read, run, and maintain.
-- Call out assumptions or tradeoffs in your README.
-
-## 🏁 Good luck and happy testing
-
-If you have any questions, don’t hesitate to reach out. 🧪💬
+## 💬 Pending improvements
+- Develop and improve test logs to be helpful on test failures and get better information on the step by step
+- Improve test data file to not duplicate values
+- Notice that sometimes we got a error under cy.visit() using pagePath even if cy.log contains the right url. Fix this buggy execution or add a retry if fails on navigate()
+- Some values on the sign up form are harcoded as (Mr, Mrs). Move this to constants and use it for a unique file info to prevent duplicated values
+- Add methods comments and documentation describing method behavior, expected parameters and returns
+- Setup cypress project so we can use parallel mode on the Github action matrix.
+- Add API integration on our tests to reduce execution time, e.g. For Delete users I would create the user using the API and then delete it by UI.
